@@ -10,7 +10,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title:Text("Words Generator")
+          title:Text("Word Generator")
           ),
           body: RandomWords(),
             floatingActionButton: FloatingActionButton(
@@ -29,6 +29,7 @@ class RandomWords extends StatefulWidget {
 }
 class RandomWordState extends State<RandomWords>{
   final List<WordPair> _words = <WordPair>[] ;
+  final Set<WordPair> _saved = Set<WordPair>();
   final TextStyle _biggerFont = const TextStyle(fontSize:18);
 
   Widget buildSuggestions(){
@@ -42,8 +43,13 @@ class RandomWordState extends State<RandomWords>{
     });
   }
   Widget _buildRow(WordPair pair){
+    final bool alreadySaved = _saved.contains(pair);
     return ListTile(
       title: Text(pair.asCamelCase,style:_biggerFont),
+      trailing: Icon(
+        alreadySaved ? Icons.favorite : Icons.favorite_border,
+        color: alreadySaved ? Colors.red : null,
+      ),
     );
   }
   @override
