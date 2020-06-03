@@ -10,6 +10,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp (
       title: "Word generator app",
       home:RandomWords(),
+      theme: ThemeData(primaryColor: Colors.white),
     );
   }
 }
@@ -35,7 +36,7 @@ class RandomWordState extends State<RandomWords>{
             final List<Widget> divided = ListTile.divideTiles(context:ctx,
             tiles:tiles,).toList();
          return Scaffold(appBar: AppBar(
-            title: Text("Saved words"),
+            title: Center(child : Text("Saved words")),
             ),
             body: ListView(children:divided)
           );
