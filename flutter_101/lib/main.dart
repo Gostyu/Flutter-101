@@ -10,7 +10,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title:Text("First App")
+          title:Text("Words Generator")
           ),
           body: RandomWords(),
             floatingActionButton: FloatingActionButton(
@@ -28,13 +28,27 @@ class RandomWords extends StatefulWidget {
   RandomWordState createState() => RandomWordState();
 }
 class RandomWordState extends State<RandomWords>{
-  
-  @override
-  Widget build(BuildContext context) {
-    final WordPair wordPair = WordPair.random();
-    return  Center(
-            child: Text(wordPair.asPascalCase),
-            );
-  }
+  final List<WordPair> _words = <WordPair>[] ;
+  final TextStyle _biggerFont = const TextStyle(fontSize:18);
 
+  Widget buildSuggestions(){
+    return ListView.builder(itemBuilder: (BuildContext _ctx, int i){
+      if(i.isOdd){return Divider();}
+      final int index = i~/2;
+      if(index>=_words.length){
+        _words.addAll(generateWordPairs().take(10));
+      }
+      return _buildRow(_words[index]);
+    });
+  }
+  Widget _buildRow(WordPair pair){
+    return ListTile(
+      title: Text(pair.asCamelCase,style:_biggerFont),
+    );
+  }
+  @override
+      Widget build(BuildContext context) {
+        return buildSuggestions();
+      }      
 }
+
